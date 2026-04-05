@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sqlforge"
+version = "0.2.0"
+description = "SQLite reference implementation for specforge spec validation"
+requires-python = ">=3.13"
+license = {text = "GPL-3.0-or-later"}
+dependencies = ["pydantic>=2.0"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]

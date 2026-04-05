@@ -1,0 +1,528 @@
+dependencies:
+  internal: []
+  stdlib:
+  - enum
+  third_party:
+  - pydantic
+description: The parser module.
+name: parser
+units:
+- bases:
+  - StrEnum
+  decorators: []
+  description: "SQLite type affinity \u2014 exact case-insensitive match only (no\
+    \ substring affinity)."
+  kind: type
+  members:
+  - decorator: null
+    description: INTEGER member of ColumnType.
+    kind: field
+    name: INTEGER
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: TEXT member of ColumnType.
+    kind: field
+    name: TEXT
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: REAL member of ColumnType.
+    kind: field
+    name: REAL
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: BLOB member of ColumnType.
+    kind: field
+    name: BLOB
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: NUMERIC member of ColumnType.
+    kind: field
+    name: NUMERIC
+    signature: null
+    type_annotation: null
+  name: ColumnType
+  requires: []
+  signature: null
+  type_annotation: null
+- bases:
+  - BaseModel
+  decorators: []
+  description: A single column in a CREATE TABLE statement.
+  kind: type
+  members:
+  - decorator: null
+    description: name member of Column.
+    kind: field
+    name: name
+    signature: null
+    type_annotation: str
+  - decorator: null
+    description: type member of Column.
+    kind: field
+    name: type
+    signature: null
+    type_annotation: ColumnType
+  - decorator: null
+    description: nullable member of Column.
+    kind: field
+    name: nullable
+    signature: null
+    type_annotation: bool
+  - decorator: null
+    description: primary_key member of Column.
+    kind: field
+    name: primary_key
+    signature: null
+    type_annotation: bool
+  name: Column
+  requires:
+  - ColumnType
+  signature: null
+  type_annotation: null
+- bases:
+  - BaseModel
+  decorators: []
+  description: A parsed CREATE TABLE statement.
+  kind: type
+  members:
+  - decorator: null
+    description: name member of Table.
+    kind: field
+    name: name
+    signature: null
+    type_annotation: str
+  - decorator: null
+    description: columns member of Table.
+    kind: field
+    name: columns
+    signature: null
+    type_annotation: list[Column]
+  - decorator: classmethod
+    description: Validate that at most one column-level PRIMARY KEY is declared.
+    kind: method
+    name: at_most_one_column_level_primary_key
+    signature: 'at_most_one_column_level_primary_key(cls: type[''Table''], v: list[Column])
+      -> list[Column]'
+    type_annotation: null
+  name: Table
+  requires:
+  - Column
+  signature: null
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: Split a SQL string into tokens. Raises ValueError on quoted identifiers.
+  kind: function
+  members: []
+  name: tokenize
+  requires: []
+  signature: 'tokenize(sql: str) -> list[str]'
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: Parse a CREATE TABLE statement. Raises ValueError on unsupported syntax.
+  kind: function
+  members: []
+  name: parse_create_table
+  requires:
+  - Column
+  - ColumnType
+  - Table
+  - tokenize
+  signature: 'parse_create_table(sql: str) -> Table'
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize basic
+  kind: test
+  members: []
+  name: test_tokenize_basic
+  requires:
+  - tokenize
+  signature: test_tokenize_basic() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize punctuation separate
+  kind: test
+  members: []
+  name: test_tokenize_punctuation_separate
+  requires:
+  - tokenize
+  signature: test_tokenize_punctuation_separate() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize whitespace and newlines
+  kind: test
+  members: []
+  name: test_tokenize_whitespace_and_newlines
+  requires:
+  - tokenize
+  signature: test_tokenize_whitespace_and_newlines() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize period separate
+  kind: test
+  members: []
+  name: test_tokenize_period_separate
+  requires:
+  - tokenize
+  signature: test_tokenize_period_separate() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize preserves case
+  kind: test
+  members: []
+  name: test_tokenize_preserves_case
+  requires:
+  - tokenize
+  signature: test_tokenize_preserves_case() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize rejects single quote
+  kind: test
+  members: []
+  name: test_tokenize_rejects_single_quote
+  requires:
+  - tokenize
+  signature: test_tokenize_rejects_single_quote() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize rejects double quote
+  kind: test
+  members: []
+  name: test_tokenize_rejects_double_quote
+  requires:
+  - tokenize
+  signature: test_tokenize_rejects_double_quote() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize rejects backtick
+  kind: test
+  members: []
+  name: test_tokenize_rejects_backtick
+  requires:
+  - tokenize
+  signature: test_tokenize_rejects_backtick() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test tokenize rejects bracket
+  kind: test
+  members: []
+  name: test_tokenize_rejects_bracket
+  requires:
+  - tokenize
+  signature: test_tokenize_rejects_bracket() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse single column
+  kind: test
+  members: []
+  name: test_parse_single_column
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_single_column() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse multiple columns in order
+  kind: test
+  members: []
+  name: test_parse_multiple_columns_in_order
+  requires:
+  - parse_create_table
+  signature: test_parse_multiple_columns_in_order() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse not null
+  kind: test
+  members: []
+  name: test_parse_not_null
+  requires:
+  - parse_create_table
+  signature: test_parse_not_null() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse integer primary key implies not null
+  kind: test
+  members: []
+  name: test_parse_integer_primary_key_implies_not_null
+  requires:
+  - parse_create_table
+  signature: test_parse_integer_primary_key_implies_not_null() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse text primary key nullable true
+  kind: test
+  members: []
+  name: test_parse_text_primary_key_nullable_true
+  requires:
+  - parse_create_table
+  signature: test_parse_text_primary_key_nullable_true() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse text primary key not null
+  kind: test
+  members: []
+  name: test_parse_text_primary_key_not_null
+  requires:
+  - parse_create_table
+  signature: test_parse_text_primary_key_not_null() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse constraints either order
+  kind: test
+  members: []
+  name: test_parse_constraints_either_order
+  requires:
+  - parse_create_table
+  signature: test_parse_constraints_either_order() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse all five types
+  kind: test
+  members: []
+  name: test_parse_all_five_types
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_all_five_types() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse if not exists
+  kind: test
+  members: []
+  name: test_parse_if_not_exists
+  requires:
+  - parse_create_table
+  signature: test_parse_if_not_exists() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse if not exists lowercase
+  kind: test
+  members: []
+  name: test_parse_if_not_exists_lowercase
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_if_not_exists_lowercase() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse fully lowercase preserves names
+  kind: test
+  members: []
+  name: test_parse_fully_lowercase_preserves_names
+  requires:
+  - parse_create_table
+  signature: test_parse_fully_lowercase_preserves_names() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse length specifier discarded
+  kind: test
+  members: []
+  name: test_parse_length_specifier_discarded
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_length_specifier_discarded() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse two param specifier discarded
+  kind: test
+  members: []
+  name: test_parse_two_param_specifier_discarded
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_two_param_specifier_discarded() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse length specifier with constraint
+  kind: test
+  members: []
+  name: test_parse_length_specifier_with_constraint
+  requires:
+  - ColumnType
+  - parse_create_table
+  signature: test_parse_length_specifier_with_constraint() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse autoincrement ignored
+  kind: test
+  members: []
+  name: test_parse_autoincrement_ignored
+  requires:
+  - parse_create_table
+  signature: test_parse_autoincrement_ignored() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse preserves name case
+  kind: test
+  members: []
+  name: test_parse_preserves_name_case
+  requires:
+  - parse_create_table
+  signature: test_parse_preserves_name_case() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse duplicate primary key raises
+  kind: test
+  members: []
+  name: test_parse_duplicate_primary_key_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_duplicate_primary_key_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse unknown type raises
+  kind: test
+  members: []
+  name: test_parse_unknown_type_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_unknown_type_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse temp raises
+  kind: test
+  members: []
+  name: test_parse_temp_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_temp_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse without rowid raises
+  kind: test
+  members: []
+  name: test_parse_without_rowid_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_without_rowid_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse schema prefix raises
+  kind: test
+  members: []
+  name: test_parse_schema_prefix_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_schema_prefix_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse missing create table raises
+  kind: test
+  members: []
+  name: test_parse_missing_create_table_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_missing_create_table_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse empty column list raises
+  kind: test
+  members: []
+  name: test_parse_empty_column_list_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_empty_column_list_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse trailing comma raises
+  kind: test
+  members: []
+  name: test_parse_trailing_comma_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_trailing_comma_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse default with parens raises
+  kind: test
+  members: []
+  name: test_parse_default_with_parens_raises
+  requires:
+  - parse_create_table
+  signature: test_parse_default_with_parens_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test column type values
+  kind: test
+  members: []
+  name: test_column_type_values
+  requires:
+  - ColumnType
+  signature: test_column_type_values() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test column defaults
+  kind: test
+  members: []
+  name: test_column_defaults
+  requires:
+  - Column
+  - ColumnType
+  signature: test_column_defaults() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test table rejects duplicate primary keys
+  kind: test
+  members: []
+  name: test_table_rejects_duplicate_primary_keys
+  requires:
+  - Column
+  - ColumnType
+  - Table
+  signature: test_table_rejects_duplicate_primary_keys() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test table allows no primary key
+  kind: test
+  members: []
+  name: test_table_allows_no_primary_key
+  requires:
+  - Column
+  - ColumnType
+  - Table
+  signature: test_table_allows_no_primary_key() -> None
+  type_annotation: null

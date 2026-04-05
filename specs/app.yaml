@@ -1,0 +1,8 @@
+name: sqlforge
+version: 0.2.0
+description: SQLite reference implementation — parser and in-memory storage engine.
+modules:
+- name: parser
+  spec: parser.yaml
+- name: storage
+  spec: storage.yaml

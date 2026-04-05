@@ -1,0 +1,631 @@
+dependencies:
+  internal:
+  - ColumnType
+  - Table
+  stdlib:
+  - __future__
+  - typing
+  third_party: []
+description: The storage module.
+name: storage
+units:
+- bases: []
+  decorators: []
+  description: 'Apply SQLite type affinity coercion to a single value.
+
+
+    None passes through unchanged (nullable checks happen elsewhere).'
+  kind: function
+  members: []
+  name: coerce
+  requires: []
+  signature: 'coerce(value: Any, affinity: ColumnType) -> Any'
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: In-memory SQLite-like storage engine.
+  kind: type
+  members:
+  - decorator: null
+    description: __init__ member of Database.
+    kind: method
+    name: __init__
+    signature: '__init__(self: Any) -> None'
+    type_annotation: null
+  - decorator: null
+    description: Register a table schema. Raises ValueError on duplicate name (case-insensitive).
+    kind: method
+    name: create_table
+    signature: 'create_table(self: Any, table: Table) -> None'
+    type_annotation: null
+  - decorator: null
+    description: Remove a table and all its rows. Raises ValueError if not found.
+    kind: method
+    name: drop_table
+    signature: 'drop_table(self: Any, name: str) -> None'
+    type_annotation: null
+  - decorator: null
+    description: Return True if a table with the given name exists (case-insensitive).
+    kind: method
+    name: table_exists
+    signature: 'table_exists(self: Any, name: str) -> bool'
+    type_annotation: null
+  - decorator: null
+    description: Insert a row and return the rowid. Validates constraints and applies
+      coercion.
+    kind: method
+    name: insert
+    signature: 'insert(self: Any, table_name: str, values: dict[str, Any]) -> int'
+    type_annotation: null
+  - decorator: null
+    description: Return all rows in insertion order. Raises ValueError if table not
+      found.
+    kind: method
+    name: select_all
+    signature: 'select_all(self: Any, table_name: str) -> list[dict[str, Any]]'
+    type_annotation: null
+  name: Database
+  requires:
+  - coerce
+  signature: null
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce none integer
+  kind: test
+  members: []
+  name: test_coerce_none_integer
+  requires:
+  - coerce
+  signature: test_coerce_none_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce none text
+  kind: test
+  members: []
+  name: test_coerce_none_text
+  requires:
+  - coerce
+  signature: test_coerce_none_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce int to integer
+  kind: test
+  members: []
+  name: test_coerce_int_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_int_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float whole to integer
+  kind: test
+  members: []
+  name: test_coerce_float_whole_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_float_whole_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float fractional to integer
+  kind: test
+  members: []
+  name: test_coerce_float_fractional_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_float_fractional_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str int to integer
+  kind: test
+  members: []
+  name: test_coerce_str_int_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_str_int_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str float whole to integer
+  kind: test
+  members: []
+  name: test_coerce_str_float_whole_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_str_float_whole_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str nonnum to integer
+  kind: test
+  members: []
+  name: test_coerce_str_nonnum_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_str_nonnum_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce bytes to integer
+  kind: test
+  members: []
+  name: test_coerce_bytes_to_integer
+  requires:
+  - coerce
+  signature: test_coerce_bytes_to_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce int to text
+  kind: test
+  members: []
+  name: test_coerce_int_to_text
+  requires:
+  - coerce
+  signature: test_coerce_int_to_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float to text
+  kind: test
+  members: []
+  name: test_coerce_float_to_text
+  requires:
+  - coerce
+  signature: test_coerce_float_to_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str to text
+  kind: test
+  members: []
+  name: test_coerce_str_to_text
+  requires:
+  - coerce
+  signature: test_coerce_str_to_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce bool to text
+  kind: test
+  members: []
+  name: test_coerce_bool_to_text
+  requires:
+  - coerce
+  signature: test_coerce_bool_to_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce bytes to text
+  kind: test
+  members: []
+  name: test_coerce_bytes_to_text
+  requires:
+  - coerce
+  signature: test_coerce_bytes_to_text() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce int to real
+  kind: test
+  members: []
+  name: test_coerce_int_to_real
+  requires:
+  - coerce
+  signature: test_coerce_int_to_real() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float to real
+  kind: test
+  members: []
+  name: test_coerce_float_to_real
+  requires:
+  - coerce
+  signature: test_coerce_float_to_real() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str float to real
+  kind: test
+  members: []
+  name: test_coerce_str_float_to_real
+  requires:
+  - coerce
+  signature: test_coerce_str_float_to_real() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str nonnum to real
+  kind: test
+  members: []
+  name: test_coerce_str_nonnum_to_real
+  requires:
+  - coerce
+  signature: test_coerce_str_nonnum_to_real() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce int to numeric
+  kind: test
+  members: []
+  name: test_coerce_int_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_int_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float whole to numeric
+  kind: test
+  members: []
+  name: test_coerce_float_whole_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_float_whole_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce float fractional to numeric
+  kind: test
+  members: []
+  name: test_coerce_float_fractional_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_float_fractional_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str int to numeric
+  kind: test
+  members: []
+  name: test_coerce_str_int_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_str_int_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str float to numeric
+  kind: test
+  members: []
+  name: test_coerce_str_float_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_str_float_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str nonnum to numeric
+  kind: test
+  members: []
+  name: test_coerce_str_nonnum_to_numeric
+  requires:
+  - coerce
+  signature: test_coerce_str_nonnum_to_numeric() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce int to blob
+  kind: test
+  members: []
+  name: test_coerce_int_to_blob
+  requires:
+  - coerce
+  signature: test_coerce_int_to_blob() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce str to blob
+  kind: test
+  members: []
+  name: test_coerce_str_to_blob
+  requires:
+  - coerce
+  signature: test_coerce_str_to_blob() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test coerce bytes to blob
+  kind: test
+  members: []
+  name: test_coerce_bytes_to_blob
+  requires:
+  - coerce
+  signature: test_coerce_bytes_to_blob() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test create table exists
+  kind: test
+  members: []
+  name: test_create_table_exists
+  requires:
+  - Database
+  signature: test_create_table_exists() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test create two tables
+  kind: test
+  members: []
+  name: test_create_two_tables
+  requires:
+  - Database
+  signature: test_create_two_tables() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test create duplicate raises
+  kind: test
+  members: []
+  name: test_create_duplicate_raises
+  requires:
+  - Database
+  signature: test_create_duplicate_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test create duplicate case insensitive raises
+  kind: test
+  members: []
+  name: test_create_duplicate_case_insensitive_raises
+  requires:
+  - Database
+  signature: test_create_duplicate_case_insensitive_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test drop table
+  kind: test
+  members: []
+  name: test_drop_table
+  requires:
+  - Database
+  signature: test_drop_table() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test drop nonexistent raises
+  kind: test
+  members: []
+  name: test_drop_nonexistent_raises
+  requires:
+  - Database
+  signature: test_drop_nonexistent_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test drop then recreate
+  kind: test
+  members: []
+  name: test_drop_then_recreate
+  requires:
+  - Database
+  signature: test_drop_then_recreate() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test table exists false
+  kind: test
+  members: []
+  name: test_table_exists_false
+  requires:
+  - Database
+  signature: test_table_exists_false() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test table exists case insensitive
+  kind: test
+  members: []
+  name: test_table_exists_case_insensitive
+  requires:
+  - Database
+  signature: test_table_exists_case_insensitive() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert nonexistent table raises
+  kind: test
+  members: []
+  name: test_insert_nonexistent_table_raises
+  requires:
+  - Database
+  signature: test_insert_nonexistent_table_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert unknown column raises
+  kind: test
+  members: []
+  name: test_insert_unknown_column_raises
+  requires:
+  - Database
+  signature: test_insert_unknown_column_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert returns rowid sequential
+  kind: test
+  members: []
+  name: test_insert_returns_rowid_sequential
+  requires:
+  - Database
+  signature: test_insert_returns_rowid_sequential() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert all columns
+  kind: test
+  members: []
+  name: test_insert_all_columns
+  requires:
+  - Database
+  signature: test_insert_all_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert nullable column omitted
+  kind: test
+  members: []
+  name: test_insert_nullable_column_omitted
+  requires:
+  - Database
+  signature: test_insert_nullable_column_omitted() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert non nullable omitted raises
+  kind: test
+  members: []
+  name: test_insert_non_nullable_omitted_raises
+  requires:
+  - Database
+  signature: test_insert_non_nullable_omitted_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert ipk auto assigns
+  kind: test
+  members: []
+  name: test_insert_ipk_auto_assigns
+  requires:
+  - Database
+  signature: test_insert_ipk_auto_assigns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert ipk explicit value
+  kind: test
+  members: []
+  name: test_insert_ipk_explicit_value
+  requires:
+  - Database
+  signature: test_insert_ipk_explicit_value() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert ipk duplicate raises
+  kind: test
+  members: []
+  name: test_insert_ipk_duplicate_raises
+  requires:
+  - Database
+  signature: test_insert_ipk_duplicate_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert ipk none auto assigns
+  kind: test
+  members: []
+  name: test_insert_ipk_none_auto_assigns
+  requires:
+  - Database
+  signature: test_insert_ipk_none_auto_assigns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert ipk auto after explicit
+  kind: test
+  members: []
+  name: test_insert_ipk_auto_after_explicit
+  requires:
+  - Database
+  signature: test_insert_ipk_auto_after_explicit() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert text pk duplicate raises
+  kind: test
+  members: []
+  name: test_insert_text_pk_duplicate_raises
+  requires:
+  - Database
+  signature: test_insert_text_pk_duplicate_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert text pk null allowed multiple
+  kind: test
+  members: []
+  name: test_insert_text_pk_null_allowed_multiple
+  requires:
+  - Database
+  signature: test_insert_text_pk_null_allowed_multiple() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert type coercion applied
+  kind: test
+  members: []
+  name: test_insert_type_coercion_applied
+  requires:
+  - Database
+  signature: test_insert_type_coercion_applied() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert column name case insensitive
+  kind: test
+  members: []
+  name: test_insert_column_name_case_insensitive
+  requires:
+  - Database
+  signature: test_insert_column_name_case_insensitive() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select nonexistent raises
+  kind: test
+  members: []
+  name: test_select_nonexistent_raises
+  requires:
+  - Database
+  signature: test_select_nonexistent_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select empty table
+  kind: test
+  members: []
+  name: test_select_empty_table
+  requires:
+  - Database
+  signature: test_select_empty_table() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select insertion order
+  kind: test
+  members: []
+  name: test_select_insertion_order
+  requires:
+  - Database
+  signature: test_select_insertion_order() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select returns canonical column names
+  kind: test
+  members: []
+  name: test_select_returns_canonical_column_names
+  requires:
+  - Database
+  signature: test_select_returns_canonical_column_names() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select returns copies
+  kind: test
+  members: []
+  name: test_select_returns_copies
+  requires:
+  - Database
+  signature: test_select_returns_copies() -> None
+  type_annotation: null
