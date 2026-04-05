@@ -8,6 +8,7 @@ Validation project for the specforge extract→build cycle.
 |--------|-----------|------|-----------|-------|
 | parser | `sqlforge/parser.py` | `specs/parser.yaml` | `output/parser.py` | 38 |
 | storage | `sqlforge/storage.py` | `specs/storage.yaml` | `output/storage.py` | 56 |
+| tokenizer | `sqlforge/tokenizer.py` | `specs/tokenizer.yaml` | `output/tokenizer.py` | 38 |
 
 ## Workflow
 

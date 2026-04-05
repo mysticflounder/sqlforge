@@ -108,3 +108,52 @@ Zero behavior gaps. Zero hallucinated features.
 3. **Test coverage drives cleanroom quality.** The 56 tests (27 coerce + 29 database) provided enough behavioral constraints that the cleanroom passed on the first attempt. The parser module (with 38 tests and more complex parsing logic) also passed first try. This suggests the test-to-code ratio matters more than description richness.
 
 4. **Method descriptions are adequate for classes.** Unlike the parser where the single-function description was "too thin," the per-method descriptions on `Database` (e.g., "Register a table schema. Raises ValueError on duplicate name (case-insensitive)") gave enough context for the cleanroom to implement correct behavior. The `(case-insensitive)` parenthetical was particularly valuable.
+
+---
+
+## Module 3: Tokenizer
+
+### Test results
+
+- Spec tests passing in cleanroom verify: 38/38
+- Behavior gaps: none
+- Cleanroom passed on first attempt
+
+Full suite: 170 tests (38 parser + 38 parser cleanroom + 56 storage + 38 tokenizer).
+
+### What the extractor captured well
+
+- **All three public units**: `TokenKind` (type/enum), `Token` (type/model), `tokenize_sql` (function) — correct kinds.
+- **Enum members**: all five `TokenKind` values (WORD, STRING, NUMBER, OP, PUNCT) as `field` members.
+- **Token fields**: `kind: TokenKind` and `value: str` captured.
+- **Function signature**: `tokenize_sql(sql: str) -> list[Token]` exact.
+- **All 38 tests** linked to correct units via `requires` edges.
+
+### What the extractor missed
+
+- **Private helpers absent**: `_scan_string`, `_scan_number`, `_scan_word` — not in spec by design. Cleanroom inlined all scanning logic into the main function.
+- **Module-level constants absent**: `_PUNCT`, `_SINGLE_OPS`, `_TWO_CHAR_OPS`, `_REJECT` frozensets — not in spec. Cleanroom defined equivalent sets as locals inside `tokenize_sql`.
+- **Lexical rules not in description**: The spec says "Tokenize a SQL string into typed tokens" — no mention of escape rules, number format, operator precedence, or error conditions. All behavior derived from tests.
+
+### Key diff observations
+
+218 diff lines, cleanroom is 140 lines vs reference 176 (20% smaller). All differences are **functionally equivalent**:
+
+| Category | Examples |
+|---|---|
+| Code structure | Reference uses 3 private helpers (`_scan_string`, `_scan_number`, `_scan_word`). Cleanroom inlines all logic into `tokenize_sql`. |
+| Constants | Reference: module-level frozensets. Cleanroom: local sets defined inside the function. |
+| Whitespace check | Reference: `ch.isspace()`. Cleanroom: `ch in " \t\n\r"`. Equivalent for SQL input. |
+| Error messages | "unsupported character" vs "Unterminated string literal" — different wording, same semantics. |
+| Docstrings | Reference has docstrings on all functions. Cleanroom omits them (spec descriptions are one-liners). |
+| String scanning | Reference: generic `_scan_string(sql, i, quote)` for both `'` and `"`. Cleanroom: duplicate inline loops for each quote type. |
+
+Zero behavior gaps. Zero hallucinated features.
+
+### New insights
+
+1. **Inlining vs helpers is the dominant structural choice.** All three cleanroom builds (parser, storage, tokenizer) show the same pattern: cleanrooms inline private helpers rather than extracting them. This is expected — the spec doesn't hint at internal decomposition, so inlining is the path of least resistance.
+
+2. **Smaller cleanroom is possible.** The tokenizer cleanroom is 20% *smaller* than the reference, despite inlining. This is because the reference has docstrings, module-level constants, and comments that the cleanroom omits. The spec only requires the behavior, not the documentation.
+
+3. **Three modules, three first-attempt passes.** The extract→build cycle is consistently producing correct cleanroom implementations on the first attempt. The test suites are sufficient to constrain behavior without needing richer spec descriptions.

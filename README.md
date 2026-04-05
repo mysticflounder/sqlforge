@@ -14,6 +14,7 @@ Each module is hand-written as a reference implementation, then:
 |--------|-------------|-------|-----------|
 | parser | CREATE TABLE parser (tokenize + parse) | 38/38 | 38/38 |
 | storage | In-memory storage engine (type coercion, constraints, rowid) | 56/56 | 56/56 |
+| tokenizer | General SQL tokenizer (strings, numbers, operators) | 38/38 | 38/38 |
 
 ## Project Structure
 
@@ -21,19 +22,24 @@ Each module is hand-written as a reference implementation, then:
 sqlforge/          # Reference implementation (hand-written)
   parser.py        # SQL CREATE TABLE parser
   storage.py       # In-memory storage engine
+  tokenizer.py     # General SQL tokenizer
 tests/             # Test suite (shared between reference and cleanroom)
   test_parser.py
   test_storage.py
+  test_tokenizer.py
 specs/             # Extracted specforge YAML specs
   app.yaml
   parser.yaml
   storage.yaml
+  tokenizer.yaml
 output/            # Cleanroom implementations (built from spec only)
   parser.py
   storage.py
+  tokenizer.py
 docs/              # Design specifications
   parser-design.md
   storage-design.md
+  tokenizer-design.md
 FINDINGS.md        # Detailed comparison of reference vs cleanroom
 ```
 

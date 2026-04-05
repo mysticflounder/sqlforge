@@ -1,0 +1,484 @@
+dependencies:
+  internal: []
+  stdlib:
+  - enum
+  third_party:
+  - pydantic
+description: The tokenizer module.
+name: tokenizer
+units:
+- bases:
+  - StrEnum
+  decorators: []
+  description: Token type classification.
+  kind: type
+  members:
+  - decorator: null
+    description: WORD member of TokenKind.
+    kind: field
+    name: WORD
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: STRING member of TokenKind.
+    kind: field
+    name: STRING
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: NUMBER member of TokenKind.
+    kind: field
+    name: NUMBER
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: OP member of TokenKind.
+    kind: field
+    name: OP
+    signature: null
+    type_annotation: null
+  - decorator: null
+    description: PUNCT member of TokenKind.
+    kind: field
+    name: PUNCT
+    signature: null
+    type_annotation: null
+  name: TokenKind
+  requires: []
+  signature: null
+  type_annotation: null
+- bases:
+  - BaseModel
+  decorators: []
+  description: A single lexical token with its kind and value.
+  kind: type
+  members:
+  - decorator: null
+    description: kind member of Token.
+    kind: field
+    name: kind
+    signature: null
+    type_annotation: TokenKind
+  - decorator: null
+    description: value member of Token.
+    kind: field
+    name: value
+    signature: null
+    type_annotation: str
+  name: Token
+  requires:
+  - TokenKind
+  signature: null
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: 'Tokenize a SQL string into typed tokens.
+
+
+    Raises ValueError on unterminated strings, unsupported characters,
+
+    or unrecognized input.'
+  kind: function
+  members: []
+  name: tokenize_sql
+  requires:
+  - Token
+  - TokenKind
+  signature: 'tokenize_sql(sql: str) -> list[Token]'
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select star
+  kind: test
+  members: []
+  name: test_select_star
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_select_star() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert statement
+  kind: test
+  members: []
+  name: test_insert_statement
+  requires:
+  - tokenize_sql
+  signature: test_insert_statement() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test empty string
+  kind: test
+  members: []
+  name: test_empty_string
+  requires:
+  - tokenize_sql
+  signature: test_empty_string() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test only whitespace
+  kind: test
+  members: []
+  name: test_only_whitespace
+  requires:
+  - tokenize_sql
+  signature: test_only_whitespace() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test string literal
+  kind: test
+  members: []
+  name: test_string_literal
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_string_literal() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test string escaped quote
+  kind: test
+  members: []
+  name: test_string_escaped_quote
+  requires:
+  - tokenize_sql
+  signature: test_string_escaped_quote() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test string empty
+  kind: test
+  members: []
+  name: test_string_empty
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_string_empty() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test string two separate
+  kind: test
+  members: []
+  name: test_string_two_separate
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_string_two_separate() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test string unterminated raises
+  kind: test
+  members: []
+  name: test_string_unterminated_raises
+  requires:
+  - tokenize_sql
+  signature: test_string_unterminated_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test double quoted identifier
+  kind: test
+  members: []
+  name: test_double_quoted_identifier
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_double_quoted_identifier() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test double quoted escaped
+  kind: test
+  members: []
+  name: test_double_quoted_escaped
+  requires:
+  - tokenize_sql
+  signature: test_double_quoted_escaped() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test double quoted unterminated raises
+  kind: test
+  members: []
+  name: test_double_quoted_unterminated_raises
+  requires:
+  - tokenize_sql
+  signature: test_double_quoted_unterminated_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test number integer
+  kind: test
+  members: []
+  name: test_number_integer
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_number_integer() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test number decimal
+  kind: test
+  members: []
+  name: test_number_decimal
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_number_decimal() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test number leading dot
+  kind: test
+  members: []
+  name: test_number_leading_dot
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_number_leading_dot() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test number large
+  kind: test
+  members: []
+  name: test_number_large
+  requires:
+  - tokenize_sql
+  signature: test_number_large() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op equals
+  kind: test
+  members: []
+  name: test_op_equals
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_op_equals() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op not equal angle
+  kind: test
+  members: []
+  name: test_op_not_equal_angle
+  requires:
+  - tokenize_sql
+  signature: test_op_not_equal_angle() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op not equal bang
+  kind: test
+  members: []
+  name: test_op_not_equal_bang
+  requires:
+  - tokenize_sql
+  signature: test_op_not_equal_bang() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op less equal
+  kind: test
+  members: []
+  name: test_op_less_equal
+  requires:
+  - tokenize_sql
+  signature: test_op_less_equal() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op greater equal
+  kind: test
+  members: []
+  name: test_op_greater_equal
+  requires:
+  - tokenize_sql
+  signature: test_op_greater_equal() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op less than
+  kind: test
+  members: []
+  name: test_op_less_than
+  requires:
+  - tokenize_sql
+  signature: test_op_less_than() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op greater than
+  kind: test
+  members: []
+  name: test_op_greater_than
+  requires:
+  - tokenize_sql
+  signature: test_op_greater_than() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test op arithmetic
+  kind: test
+  members: []
+  name: test_op_arithmetic
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_op_arithmetic() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test punct parens comma
+  kind: test
+  members: []
+  name: test_punct_parens_comma
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_punct_parens_comma() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test punct dot
+  kind: test
+  members: []
+  name: test_punct_dot
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_punct_dot() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test punct semicolon
+  kind: test
+  members: []
+  name: test_punct_semicolon
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_punct_semicolon() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test select where
+  kind: test
+  members: []
+  name: test_select_where
+  requires:
+  - tokenize_sql
+  signature: test_select_where() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert with values
+  kind: test
+  members: []
+  name: test_insert_with_values
+  requires:
+  - tokenize_sql
+  signature: test_insert_with_values() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test case preservation
+  kind: test
+  members: []
+  name: test_case_preservation
+  requires:
+  - tokenize_sql
+  signature: test_case_preservation() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test underscore identifier
+  kind: test
+  members: []
+  name: test_underscore_identifier
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_underscore_identifier() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test underscore leading
+  kind: test
+  members: []
+  name: test_underscore_leading
+  requires:
+  - TokenKind
+  - tokenize_sql
+  signature: test_underscore_leading() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test backtick raises
+  kind: test
+  members: []
+  name: test_backtick_raises
+  requires:
+  - tokenize_sql
+  signature: test_backtick_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test bracket raises
+  kind: test
+  members: []
+  name: test_bracket_raises
+  requires:
+  - tokenize_sql
+  signature: test_bracket_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test at sign raises
+  kind: test
+  members: []
+  name: test_at_sign_raises
+  requires:
+  - tokenize_sql
+  signature: test_at_sign_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test hash raises
+  kind: test
+  members: []
+  name: test_hash_raises
+  requires:
+  - tokenize_sql
+  signature: test_hash_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test token kind values
+  kind: test
+  members: []
+  name: test_token_kind_values
+  requires:
+  - TokenKind
+  signature: test_token_kind_values() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test token construction
+  kind: test
+  members: []
+  name: test_token_construction
+  requires:
+  - Token
+  - TokenKind
+  signature: test_token_construction() -> None
+  type_annotation: null
