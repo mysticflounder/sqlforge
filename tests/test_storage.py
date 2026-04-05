@@ -219,6 +219,27 @@ def test_table_exists_case_insensitive():
     assert db.table_exists("USERS") is True
 
 
+# --- Database.get_column_names ---
+
+
+def test_get_column_names():
+    db = Database()
+    db.create_table(_users_table())
+    assert db.get_column_names("users") == ["id", "name", "score"]
+
+
+def test_get_column_names_case_insensitive():
+    db = Database()
+    db.create_table(_users_table())
+    assert db.get_column_names("USERS") == ["id", "name", "score"]
+
+
+def test_get_column_names_nonexistent_raises():
+    db = Database()
+    with pytest.raises(ValueError):
+        db.get_column_names("nope")
+
+
 # --- Database.insert ---
 
 

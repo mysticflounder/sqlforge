@@ -1,0 +1,376 @@
+dependencies:
+  internal:
+  - Database
+  - Token
+  - TokenKind
+  - tokenize_sql
+  stdlib:
+  - __future__
+  third_party:
+  - pydantic
+description: The insert module.
+name: insert
+units:
+- bases:
+  - BaseModel
+  decorators: []
+  description: A literal value in a SQL statement.
+  kind: type
+  members:
+  - decorator: null
+    description: raw member of Value.
+    kind: field
+    name: raw
+    signature: null
+    type_annotation: int | float | str | None
+  name: Value
+  requires: []
+  signature: null
+  type_annotation: null
+- bases:
+  - BaseModel
+  decorators: []
+  description: A parsed INSERT INTO statement.
+  kind: type
+  members:
+  - decorator: null
+    description: table_name member of InsertStatement.
+    kind: field
+    name: table_name
+    signature: null
+    type_annotation: str
+  - decorator: null
+    description: columns member of InsertStatement.
+    kind: field
+    name: columns
+    signature: null
+    type_annotation: list[str] | None
+  - decorator: null
+    description: values member of InsertStatement.
+    kind: field
+    name: values
+    signature: null
+    type_annotation: list[Value]
+  name: InsertStatement
+  requires:
+  - Value
+  signature: null
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: 'Parse an INSERT INTO ... VALUES (...) statement.
+
+
+    Raises ValueError on syntax errors or unsupported features.'
+  kind: function
+  members: []
+  name: parse_insert
+  requires:
+  - InsertStatement
+  - Value
+  signature: 'parse_insert(sql: str) -> InsertStatement'
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse with columns
+  kind: test
+  members: []
+  name: test_parse_with_columns
+  requires:
+  - Value
+  - parse_insert
+  signature: test_parse_with_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse without columns
+  kind: test
+  members: []
+  name: test_parse_without_columns
+  requires:
+  - Value
+  - parse_insert
+  signature: test_parse_without_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse multiple columns
+  kind: test
+  members: []
+  name: test_parse_multiple_columns
+  requires:
+  - parse_insert
+  signature: test_parse_multiple_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse float value
+  kind: test
+  members: []
+  name: test_parse_float_value
+  requires:
+  - parse_insert
+  signature: test_parse_float_value() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse null value
+  kind: test
+  members: []
+  name: test_parse_null_value
+  requires:
+  - parse_insert
+  signature: test_parse_null_value() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse case insensitive keywords
+  kind: test
+  members: []
+  name: test_parse_case_insensitive_keywords
+  requires:
+  - Value
+  - parse_insert
+  signature: test_parse_case_insensitive_keywords() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse trailing semicolon
+  kind: test
+  members: []
+  name: test_parse_trailing_semicolon
+  requires:
+  - parse_insert
+  signature: test_parse_trailing_semicolon() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse escaped string
+  kind: test
+  members: []
+  name: test_parse_escaped_string
+  requires:
+  - parse_insert
+  signature: test_parse_escaped_string() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse preserves table name case
+  kind: test
+  members: []
+  name: test_parse_preserves_table_name_case
+  requires:
+  - parse_insert
+  signature: test_parse_preserves_table_name_case() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse preserves column name case
+  kind: test
+  members: []
+  name: test_parse_preserves_column_name_case
+  requires:
+  - parse_insert
+  signature: test_parse_preserves_column_name_case() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse missing insert raises
+  kind: test
+  members: []
+  name: test_parse_missing_insert_raises
+  requires:
+  - parse_insert
+  signature: test_parse_missing_insert_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse missing into raises
+  kind: test
+  members: []
+  name: test_parse_missing_into_raises
+  requires:
+  - parse_insert
+  signature: test_parse_missing_into_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse missing values raises
+  kind: test
+  members: []
+  name: test_parse_missing_values_raises
+  requires:
+  - parse_insert
+  signature: test_parse_missing_values_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse missing table name raises
+  kind: test
+  members: []
+  name: test_parse_missing_table_name_raises
+  requires:
+  - parse_insert
+  signature: test_parse_missing_table_name_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse empty column list raises
+  kind: test
+  members: []
+  name: test_parse_empty_column_list_raises
+  requires:
+  - parse_insert
+  signature: test_parse_empty_column_list_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse empty value list raises
+  kind: test
+  members: []
+  name: test_parse_empty_value_list_raises
+  requires:
+  - parse_insert
+  signature: test_parse_empty_value_list_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse trailing tokens raises
+  kind: test
+  members: []
+  name: test_parse_trailing_tokens_raises
+  requires:
+  - parse_insert
+  signature: test_parse_trailing_tokens_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test parse null case insensitive
+  kind: test
+  members: []
+  name: test_parse_null_case_insensitive
+  requires:
+  - parse_insert
+  signature: test_parse_null_case_insensitive() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute with columns
+  kind: test
+  members: []
+  name: test_execute_with_columns
+  requires:
+  - parse_insert
+  signature: test_execute_with_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute without columns
+  kind: test
+  members: []
+  name: test_execute_without_columns
+  requires:
+  - parse_insert
+  signature: test_execute_without_columns() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute column count mismatch raises
+  kind: test
+  members: []
+  name: test_execute_column_count_mismatch_raises
+  requires:
+  - parse_insert
+  signature: test_execute_column_count_mismatch_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute positional count mismatch raises
+  kind: test
+  members: []
+  name: test_execute_positional_count_mismatch_raises
+  requires:
+  - parse_insert
+  signature: test_execute_positional_count_mismatch_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute nonexistent table raises
+  kind: test
+  members: []
+  name: test_execute_nonexistent_table_raises
+  requires:
+  - parse_insert
+  signature: test_execute_nonexistent_table_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute null non nullable raises
+  kind: test
+  members: []
+  name: test_execute_null_non_nullable_raises
+  requires:
+  - parse_insert
+  signature: test_execute_null_non_nullable_raises() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute type coercion
+  kind: test
+  members: []
+  name: test_execute_type_coercion
+  requires:
+  - parse_insert
+  signature: test_execute_type_coercion() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute multiple inserts sequential rowids
+  kind: test
+  members: []
+  name: test_execute_multiple_inserts_sequential_rowids
+  requires:
+  - parse_insert
+  signature: test_execute_multiple_inserts_sequential_rowids() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test execute ipk auto assignment
+  kind: test
+  members: []
+  name: test_execute_ipk_auto_assignment
+  requires:
+  - parse_insert
+  signature: test_execute_ipk_auto_assignment() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test value int
+  kind: test
+  members: []
+  name: test_value_int
+  requires:
+  - Value
+  signature: test_value_int() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test value none
+  kind: test
+  members: []
+  name: test_value_none
+  requires:
+  - Value
+  signature: test_value_none() -> None
+  type_annotation: null
+- bases: []
+  decorators: []
+  description: test insert statement defaults
+  kind: test
+  members: []
+  name: test_insert_statement_defaults
+  requires:
+  - InsertStatement
+  - Value
+  signature: test_insert_statement_defaults() -> None
+  type_annotation: null

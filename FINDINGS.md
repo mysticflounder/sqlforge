@@ -157,3 +157,55 @@ Zero behavior gaps. Zero hallucinated features.
 2. **Smaller cleanroom is possible.** The tokenizer cleanroom is 20% *smaller* than the reference, despite inlining. This is because the reference has docstrings, module-level constants, and comments that the cleanroom omits. The spec only requires the behavior, not the documentation.
 
 3. **Three modules, three first-attempt passes.** The extract→build cycle is consistently producing correct cleanroom implementations on the first attempt. The test suites are sufficient to constrain behavior without needing richer spec descriptions.
+
+---
+
+## Module 4: INSERT
+
+### Test results
+
+- Spec tests passing in cleanroom verify: 30/30
+- Behavior gaps: none
+- Cleanroom passed on first attempt
+
+Full suite: 203 tests (38 parser + 38 parser cleanroom + 59 storage + 38 tokenizer + 30 insert).
+
+### What makes this module different
+
+First module with **internal dependencies** — imports from both `tokenizer` (for lexing) and `storage` (for execution). This tests whether the extract→build cycle works across module boundaries. The cleanroom needed the reference tokenizer.py, storage.py, and parser.py as dependencies in the temp directory.
+
+### What the extractor captured well
+
+- **All four public units**: `Value` (type), `InsertStatement` (type), `parse_insert` (function), `execute_insert` (function) — correct kinds.
+- **Model fields**: `Value.raw: int | float | str | None`, `InsertStatement.table_name: str`, `InsertStatement.columns: list[str] | None`, `InsertStatement.values: list[Value]`.
+- **Function signatures**: `parse_insert(sql: str) -> InsertStatement`, `execute_insert(statement: InsertStatement, db: Database) -> int`.
+- **All 30 tests** captured with signatures and `requires` edges.
+- **Internal dependencies**: `tokenize_sql`, `Token`, `TokenKind` from tokenizer, `Database` from storage.
+
+### What the extractor missed
+
+- **`execute_insert` test mapping**: The extractor mapped all `test_execute_*` tests to `parse_insert` because they call both functions. `execute_insert` shows "no tests mapped." Not a behavioral gap — the tests still exercise both functions.
+- **Private helpers**: `_match_word`, `_parse_value` — absent by design. Cleanroom inlined equivalent logic.
+- **Parse algorithm not described**: Spec says "Parse an INSERT INTO ... VALUES (...) statement" — no mention of the keyword sequence, column list detection, or value type parsing. All inferred from tests.
+
+### Key diff observations
+
+245 diff lines, cleanroom 170 lines vs reference 143 (19% larger):
+
+| Category | Examples |
+|---|---|
+| Private helpers | Reference: `_match_word`, `_parse_value`. Cleanroom: inline checks. |
+| Token comparison | Reference: `token == Token(kind=..., value=...)`. Cleanroom: `token.kind == ... and token.value == ...`. |
+| Error messages | Different wording throughout — all functionally equivalent. |
+| Variable naming | `i`/`pos`, `stmt`/`result` — style differences. |
+| Import style | Reference: relative (`.storage`, `.tokenizer`). Cleanroom: absolute (`sqlforge.storage`). |
+
+Zero behavior gaps. Zero hallucinated features.
+
+### New insights
+
+1. **Cross-module dependencies work transparently.** The cleanroom correctly imported and used `tokenize_sql`, `Database.insert`, and `Database.get_column_names` from dependency modules without any issues. The spec's `dependencies.internal` list was sufficient.
+
+2. **Four modules, four first-attempt passes.** The consistency is remarkable. Test suites continue to be the dominant specification mechanism — they constrain behavior far more effectively than descriptions.
+
+3. **Test-to-requires mapping has a weakness.** When a test function calls two public functions (e.g., `parse_insert` then `execute_insert`), the extractor maps it to only one. This doesn't affect cleanroom quality since the test code is provided separately, but it means the spec's `requires` graph understates the actual dependencies.

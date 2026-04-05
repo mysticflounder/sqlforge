@@ -112,6 +112,13 @@ class Database:
         """Return True if a table with the given name exists (case-insensitive)."""
         return name.lower() in self._tables
 
+    def get_column_names(self, table_name: str) -> list[str]:
+        """Return column names in schema order. Raises ValueError if table not found."""
+        key = table_name.lower()
+        if key not in self._tables:
+            raise ValueError(f"no such table: {table_name!r}")
+        return [col.name for col in self._tables[key].columns]
+
     def insert(self, table_name: str, values: dict[str, Any]) -> int:
         """Insert a row and return the rowid. Validates constraints and applies coercion."""
         key = table_name.lower()

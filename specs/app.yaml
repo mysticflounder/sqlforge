@@ -8,3 +8,5 @@ modules:
   spec: storage.yaml
 - name: tokenizer
   spec: tokenizer.yaml
+- name: insert
+  spec: insert.yaml
